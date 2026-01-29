@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Finoku.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
