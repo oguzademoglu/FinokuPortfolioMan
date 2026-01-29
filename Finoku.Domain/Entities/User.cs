@@ -11,7 +11,7 @@ namespace Finoku.Domain.Entities
         public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public UserRole UserRole { get; set; }
+        public UserRole Role { get; set; }
         public List<Asset> Assets { get; set; } = [];
 
     }
