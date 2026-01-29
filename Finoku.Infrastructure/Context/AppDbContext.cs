@@ -11,12 +11,14 @@ namespace Finoku.Infrastructure.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Asset> Assets { get; set; }
         public DbSet<AssetCategory> AssetCategories { get; set; }
+        public DbSet<ExchangeRate> ExchangeRates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Asset>().Property(a => a.Amount).HasPrecision(18, 4);
             modelBuilder.Entity<Asset>().Property(a => a.PurchasePrice).HasPrecision(18,4);
             modelBuilder.Entity<AssetCategory>().ToTable("AssetCategory");
+            modelBuilder.Entity<ExchangeRate>().Property(e => e.Rate).HasPrecision(18, 4);
 
 
             // User - Asset Bağlantısı
