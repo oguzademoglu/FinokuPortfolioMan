@@ -26,7 +26,7 @@ namespace Finoku.API.Controllers
             return Ok(new {message = $"{category.Name} eklendi"});
         }
 
-        [HttpPut("{id")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> EditCategory(int id, [FromBody] AssetCategory category)
         {
             var existing = await _context.AssetCategories.FindAsync(id);
@@ -37,7 +37,7 @@ namespace Finoku.API.Controllers
             return Ok(new { message = "Kategori güncellendi." });
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id, [FromBody] AssetCategory category)
         {
             var existing = await _context.AssetCategories.FindAsync(id);
