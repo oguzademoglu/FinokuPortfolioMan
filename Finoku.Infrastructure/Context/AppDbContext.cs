@@ -40,8 +40,8 @@ namespace Finoku.Infrastructure.Context
 
             // Users
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "admin", Password = "admin123", Role = UserRole.Admin },
-                new User { Id = 2, Username = "user", Password = "user123", Role = UserRole.Regular }
+                new User { Id = 1, Username = "admin", Password = "123", Role = UserRole.Admin },
+                new User { Id = 2, Username = "user", Password = "123", Role = UserRole.Regular }
             );
         }
     }
