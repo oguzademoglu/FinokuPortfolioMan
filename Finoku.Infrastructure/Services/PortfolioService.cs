@@ -40,6 +40,16 @@ namespace Finoku.Infrastructure.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<Asset>> GetUserPorfolio(int userId, int? categoryId = null)
+        {
+            var assets = _context.Assets.Where(asset => asset.UserId == userId);
+            if (categoryId.HasValue)
+            {
+                assets = assets.Where(asset => asset.CategoryId == categoryId);
+            }
+            return await assets.ToListAsync();
+        }
+
         public async Task<List<Asset>> GetAllPortfolios()
         {
             return await _context.Assets.Include(asset => asset.User).ToListAsync();
@@ -76,14 +86,6 @@ namespace Finoku.Infrastructure.Services
             return new PortfolioReportDto(totalValue, totalProfitLoss, percentageOfProfitLoss, targetCurrency, details);
         }
 
-        public async Task<List<Asset>> GetUserPorfolio(int userId, int? categoryId = null)
-        {
-            var assets = _context.Assets.Where(asset => asset.UserId == userId);
-            if(categoryId != null)
-            {
-                assets = assets.Where(asset => asset.CategoryId == categoryId);
-            }
-            return await assets.ToListAsync();
-        }
+        
     }
 }

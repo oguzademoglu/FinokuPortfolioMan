@@ -15,6 +15,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 builder.Services.AddHttpClient<IExchangeRateService, ExchangeRateService>();
 builder.Services.AddSwaggerGen(c =>
 {
