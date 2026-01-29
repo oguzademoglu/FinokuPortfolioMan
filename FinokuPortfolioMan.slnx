@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Finoku.API/Finoku.API.csproj" />
+  <Project Path="Finoku.Application/Finoku.Application.csproj" />
+  <Project Path="Finoku.Domain/Finoku.Domain.csproj" />
+  <Project Path="Finoku.Infrastructure/Finoku.Infrastructure.csproj" />
+</Solution>
