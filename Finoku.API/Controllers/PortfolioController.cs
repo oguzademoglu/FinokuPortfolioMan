@@ -1,9 +1,7 @@
 ﻿using Finoku.Application.DTOs;
 using Finoku.Application.Interfaces;
 using Finoku.Domain.Entities;
-using Finoku.Infrastructure.Context;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -21,7 +19,7 @@ namespace Finoku.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] CreateAssetDto dto) 
+        public async Task<IActionResult> Add([FromBody] CreateAssetDto dto) 
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             if(userId == null) throw new KeyNotFoundException("Kullanıcı bulunamadı");  // portfolioService DeleteAsset()'den kopya
@@ -32,9 +30,10 @@ namespace Finoku.API.Controllers
                 Currency = dto.Currency,
                 PurchasePrice = dto.PurchasePrice,
                 PurchasedAt = DateTime.UtcNow,
-                UserId = userId
+                UserId = userId,
+                CategoryId = dto.CategoryId,
             };
-            _portfolioService.AddAsset(asset);
+            await _portfolioService.AddAsset(asset);
             return Ok(new { message = "Varlık Başarıyla Eklendi" });
         }
 

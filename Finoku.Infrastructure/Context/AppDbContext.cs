@@ -1,6 +1,5 @@
 ﻿using Finoku.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-
 namespace Finoku.Infrastructure.Context
 {
     public class AppDbContext : DbContext
@@ -13,6 +12,10 @@ namespace Finoku.Infrastructure.Context
         public DbSet<AssetCategory> AssetCategories { get; set; }
         public DbSet<ExchangeRate> ExchangeRates { get; set; }
 
+        /// <summary>
+        /// ef core power tools extension
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Asset>().Property(a => a.Amount).HasPrecision(18, 4);

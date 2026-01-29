@@ -29,6 +29,7 @@ namespace Finoku.Infrastructure.Services
             // Admin: admin / 123
             // User: user / 123
             var user = _context.Users.FirstOrDefault(u => u.Username == request.Username && u.Password == request.Password);
+            // buraya tekrak bakmak gerek
             if (user == null)
             {
                 return null;
