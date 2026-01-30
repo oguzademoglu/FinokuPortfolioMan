@@ -53,7 +53,18 @@ namespace Finoku.API.Controllers
         public async Task<IActionResult> GetAllPortfolios()
         {
             var portfolios = await _portfolioService.GetAllPortfolios();
-            return Ok(portfolios);
+            var resultDto = portfolios.Select(p => new AllPortfoliosDto
+            (
+                p.Id,
+                p.Name,
+                p.Amount,
+                p.Currency,
+                p.User?.Username?? "",
+                p.Category?.Name?? "",
+                p.CurrentPrice
+            ));
+            
+            return Ok(resultDto);
         }
 
         [HttpGet]
