@@ -47,7 +47,7 @@ namespace Finoku.API.Controllers
             return Ok(new { message = "Varlık başarıyla silindi." });
         }
 
-        [HttpPut("{id")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsset(int id, [FromBody] Asset asset)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
