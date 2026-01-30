@@ -29,6 +29,7 @@ namespace Finoku.API.Controllers
                 Amount = dto.Amount,
                 Currency = dto.Currency,
                 PurchasePrice = dto.PurchasePrice,
+                CurrentPrice = dto.PurchasePrice,
                 PurchasedAt = DateTime.UtcNow,
                 UserId = userId,
                 AssetCategoryId = dto.CategoryId,
@@ -61,6 +62,19 @@ namespace Finoku.API.Controllers
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             if (userId == null) throw new KeyNotFoundException("Kullanıcı bulunamadı");
             var result = await _portfolioService.GetUserPorfolio(userId, categoryId);
+            var resultDto = result.Select(asset => new
+            {
+                asset.Id,
+                asset.Name,
+                asset.Amount,
+                asset.Currency,
+                asset.PurchasePrice,
+                //CategoryName = asset.Category?.Name,
+                asset.CurrentPrice,
+                asset.AssetCategoryId,
+                asset.PurchasedAt
+            });
+            return Ok(resultDto);
 
             return Ok(result);
         }

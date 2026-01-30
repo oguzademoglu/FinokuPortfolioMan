@@ -12,6 +12,7 @@ namespace Finoku.Application.DTOs
         int CategoryId,
         decimal Amount,
         decimal PurchasePrice,
-        string Currency
+        string Currency,
+        decimal CurrentPrice
     );
 }

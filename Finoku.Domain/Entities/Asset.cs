@@ -13,6 +13,7 @@ namespace Finoku.Domain.Entities
         public decimal Amount { get; set; }
         public string Currency { get; set; } = "TRY"; // USD, EUR, GBP 
         public decimal PurchasePrice { get; set; }
+        public decimal CurrentPrice { get; set; }
         public DateTime PurchasedAt {  get; set; }
 
         public int UserId { get; set; }
