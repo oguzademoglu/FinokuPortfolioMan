@@ -17,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 builder.Services.AddScoped<IPriceService, MockPriceService>();
+builder.Services.AddHostedService<ExchangeRateBgService>();
 builder.Services.AddHttpClient<IExchangeRateService, ExchangeRateService>();
 builder.Services.AddSingleton<ILogService, MongoLogService>();
 builder.Services.AddSwaggerGen(c =>
