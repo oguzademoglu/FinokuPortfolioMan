@@ -15,11 +15,13 @@ namespace Finoku.Infrastructure.Services
     {
         private readonly AppDbContext _context;
         private readonly IExchangeRateService _exchangeRateService;
+        private readonly IPriceService _priceService;
 
-        public PortfolioService(AppDbContext context, IExchangeRateService exchangeRateService)
+        public PortfolioService(AppDbContext context, IExchangeRateService exchangeRateService, IPriceService priceService)
         {
             _context = context;
             _exchangeRateService = exchangeRateService;
+            _priceService = priceService;
         }
         public async Task AddAsset(Asset asset)
         {
@@ -70,7 +72,10 @@ namespace Finoku.Infrastructure.Services
             foreach (var asset in assets) 
             { 
                 var rate = await _exchangeRateService.GetExchangeRateAsync(asset.Currency, targetCurrency);
-                decimal currentValue = asset.Amount * rate;
+
+                var currentUnitPrice = await _priceService.GetCurrentPriceAsync(asset.Name, asset.Category?.Name ?? "");
+
+                decimal currentValue = asset.Amount * currentUnitPrice * rate;
                 decimal costValue = asset.Amount * asset.PurchasePrice * rate;
                 decimal profitLoss = currentValue - costValue;
 
