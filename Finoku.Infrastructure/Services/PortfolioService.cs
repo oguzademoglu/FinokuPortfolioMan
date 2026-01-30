@@ -45,7 +45,7 @@ namespace Finoku.Infrastructure.Services
             var assets = _context.Assets.Where(asset => asset.UserId == userId);
             if (categoryId.HasValue)
             {
-                assets = assets.Where(asset => asset.CategoryId == categoryId);
+                assets = assets.Where(asset => asset.AssetCategoryId == categoryId);
             }
             return await assets.ToListAsync();
         }

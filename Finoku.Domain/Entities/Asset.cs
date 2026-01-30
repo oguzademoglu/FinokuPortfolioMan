@@ -16,7 +16,7 @@ namespace Finoku.Domain.Entities
         public DateTime PurchasedAt {  get; set; }
 
         public int UserId { get; set; }
-        public int CategoryId { get; set; }
+        public int AssetCategoryId { get; set; }
 
         public User? User { get; set; }
         public AssetCategory? Category { get; set; }

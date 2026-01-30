@@ -31,7 +31,7 @@ namespace Finoku.API.Controllers
                 PurchasePrice = dto.PurchasePrice,
                 PurchasedAt = DateTime.UtcNow,
                 UserId = userId,
-                CategoryId = dto.CategoryId,
+                AssetCategoryId = dto.CategoryId,
             };
             await _portfolioService.AddAsset(asset);
             return Ok(new { message = "Varlık Başarıyla Eklendi" });

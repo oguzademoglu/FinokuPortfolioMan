@@ -19,7 +19,7 @@ namespace Finoku.Infrastructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Asset>().Property(a => a.Amount).HasPrecision(18, 4);
-            modelBuilder.Entity<Asset>().Property(a => a.PurchasePrice).HasPrecision(18,4);
+            modelBuilder.Entity<Asset>().Property(a => a.PurchasePrice).HasPrecision(18, 4);
             modelBuilder.Entity<AssetCategory>().ToTable("AssetCategory");
             modelBuilder.Entity<ExchangeRate>().Property(e => e.Rate).HasPrecision(18, 4);
 
@@ -48,6 +48,11 @@ namespace Finoku.Infrastructure.Context
                 new User { Id = 1, Username = "admin", Password = "123", Role = UserRole.Admin },
                 new User { Id = 2, Username = "user", Password = "123", Role = UserRole.Regular }
             );
+
+            modelBuilder.Entity<ExchangeRate>(entity =>
+            {
+                entity.Property(e => e.Rate).HasColumnType("decimal(18, 4)");
+            });
         }
     }
 }
