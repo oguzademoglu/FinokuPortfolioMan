@@ -47,6 +47,19 @@ namespace Finoku.API.Controllers
             return Ok(new { message = "Varlık başarıyla silindi." });
         }
 
+        [HttpPut("{id")]
+        public async Task<IActionResult> UpdateAsset(int id, [FromBody] Asset asset)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            if (userId == null)
+            {
+                return Unauthorized("Kullanıcı kimliği doğrulanamadı.");
+            }
+            //if (userId == null) throw new KeyNotFoundException("Kullanıcı bulunamadı");
+            await _portfolioService.UpdateAsset(id, userId, asset);
+            return Ok(new { message = "Varlık başarıyla güncellendi." });
+        }
+
 
         [HttpGet("all")]
         [Authorize(Roles = "Admin")]
@@ -80,14 +93,11 @@ namespace Finoku.API.Controllers
                 asset.Amount,
                 asset.Currency,
                 asset.PurchasePrice,
-                //CategoryName = asset.Category?.Name,
                 asset.CurrentPrice,
                 asset.AssetCategoryId,
                 asset.PurchasedAt
             });
             return Ok(resultDto);
-
-            return Ok(result);
         }
 
 

@@ -18,6 +18,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 builder.Services.AddScoped<IPriceService, MockPriceService>();
 builder.Services.AddHttpClient<IExchangeRateService, ExchangeRateService>();
+builder.Services.AddSingleton<ILogService, MongoLogService>();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Finoku Portfolio API", Version = "v1" });

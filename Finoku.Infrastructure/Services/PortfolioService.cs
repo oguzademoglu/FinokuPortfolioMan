@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Finoku.Infrastructure.Services
@@ -16,18 +17,27 @@ namespace Finoku.Infrastructure.Services
         private readonly AppDbContext _context;
         private readonly IExchangeRateService _exchangeRateService;
         private readonly IPriceService _priceService;
+        private readonly ILogService _logService;
 
-        public PortfolioService(AppDbContext context, IExchangeRateService exchangeRateService, IPriceService priceService)
+        public PortfolioService(AppDbContext context, IExchangeRateService exchangeRateService, IPriceService priceService, ILogService logService)
         {
             _context = context;
             _exchangeRateService = exchangeRateService;
             _priceService = priceService;
+            _logService = logService;
         }
         public async Task AddAsset(Asset asset)
         {
             _context.Assets.Add(asset);
             await _context.SaveChangesAsync();
-            // Mongo log buraya gelecek
+            // MongoDB log 
+            await _logService.LogAsync(new SystemLog
+            {
+                TransactionType = "AddAsset",
+                UserId = asset.UserId.ToString(),
+                AffectedData = "Assets",
+                NewValue = JsonSerializer.Serialize(asset)
+            });
         }
 
         public async Task DeleteAsset(int assetId, int userId)
@@ -40,6 +50,42 @@ namespace Finoku.Infrastructure.Services
             }
             _context.Assets.Remove(asset);
             await _context.SaveChangesAsync();
+
+            // Mongo
+            await _logService.LogAsync(new SystemLog
+            {
+                TransactionType = "AddAsset",
+                UserId = asset.UserId.ToString(),
+                AffectedData = "Assets",
+                NewValue = JsonSerializer.Serialize(asset)
+            });
+        }
+
+        public async Task UpdateAsset(int assetId, int userId, Asset updatedAsset)
+        {
+            var asset = _context.Assets.FirstOrDefault(a => a.Id == assetId && a.UserId == userId);
+            if (asset == null)
+            {
+                //throw new Exception(new {Message = "Başarısız"});  -> hatalı.s
+                throw new KeyNotFoundException("Silinmek istenen varlık bulunamadı."); // AI'in önerisi
+            }
+
+            asset.Name = updatedAsset.Name;
+            asset.Amount = updatedAsset.Amount;
+            asset.PurchasePrice = updatedAsset.PurchasePrice;
+            asset.Currency = updatedAsset.Currency;
+            asset.AssetCategoryId = updatedAsset.AssetCategoryId;
+
+            await _context.SaveChangesAsync();
+
+            // Mongo
+            await _logService.LogAsync(new SystemLog
+            {
+                TransactionType = "AddAsset",
+                UserId = asset.UserId.ToString(),
+                AffectedData = "Assets",
+                NewValue = JsonSerializer.Serialize(asset)
+            });
         }
 
         public async Task<List<Asset>> GetUserPorfolio(int userId, int? categoryId = null)

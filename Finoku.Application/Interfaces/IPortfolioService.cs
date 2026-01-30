@@ -14,6 +14,7 @@ namespace Finoku.Application.Interfaces
         Task<List<Asset>> GetAllPortfolios(); // only Admin!
         Task AddAsset(Asset asset);
         Task DeleteAsset(int assetId, int userId);
+        Task UpdateAsset(int assetId, int userId, Asset asset);
         Task<PortfolioReportDto> GetPortfolioReportAsync(int userId, string targetCurrency);
     }
 }
